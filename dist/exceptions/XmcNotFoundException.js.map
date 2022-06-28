@@ -1,0 +1,1 @@
+{"version":3,"file":"XmcNotFoundException.js","sourceRoot":"","sources":["../../src/exceptions/XmcNotFoundException.ts"],"names":[],"mappings":";;AAAA,mDAA4C;AAE5C,MAAM,oBAAqB,SAAQ,uBAAa;IAC9C,YAAY,EAAU;QACpB,KAAK,CAAC,GAAG,EAAE,eAAe,EAAE,YAAY,CAAC,CAAC;IAC5C,CAAC;CACF;AAED,kBAAe,oBAAoB,CAAC"}

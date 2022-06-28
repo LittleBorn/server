@@ -3,7 +3,6 @@ import Controller from "../interfaces/controller.interface";
 import authMiddleware from "../middleware/auth.middleware";
 import GuestModel from "./guest.model";
 import * as fs from "fs";
-import { printGuestCard } from "../utils/printerHelper";
 import * as jwt from "jsonwebtoken";
 import IGuest from "./guest.interface";
 import createType from "../interfaces/createType.enum";
@@ -80,13 +79,8 @@ class GuestController implements Controller {
     }else{
 
       //todo debug -> print guest card 
-      printGuestCard({
-        ...user.data,
-        firstName: guest.firstName,
-        lastName: guest.lastName,
-        duration: guest.duration
-      }, username);
 
+      
       const msg: string = `Das Anlegen des Benutzers ${guest.firstName} ${guest.lastName} durch: ${username} war erfolgreich!`
       loggingHelper.log(loggingHelper.LoggingLevel.info, msg);
       response.json({

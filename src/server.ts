@@ -9,14 +9,12 @@ import GuestController from './guest/guest.controller';
 
 // for cert
 import * as http from "http"
-import PrinterController from './printer/printer.controller';
 
 // create express application
 const app = new App(
   [
     new AuthenticationController(),
     new GuestController(),
-    new PrinterController()
   ],
 );
 
