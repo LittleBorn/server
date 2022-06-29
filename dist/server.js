@@ -7,7 +7,7 @@ require('dotenv').config();
 const app_1 = require("./app");
 // controller
 const auth_controller_1 = require("./auth/auth.controller");
-// for cert
+// for cert 
 const http = require("http");
 // create express application
 const app = new app_1.default([

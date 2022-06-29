@@ -6,6 +6,7 @@ const express = require("express");
 const error_middleware_1 = require("./middleware/error.middleware");
 const loggingHelper_1 = require("./utils/loggingHelper");
 const cors = require("cors");
+const databaseHelper_1 = require("./utils/databaseHelper");
 const Helmet = require("helmet");
 class App {
     constructor(controllers) {
@@ -14,6 +15,7 @@ class App {
         this.initializeMiddlewares();
         this.initializeControllers(controllers);
         this.initializeErrorHandling();
+        this.initializeDatabase();
     }
     listen() {
         return this.app;
@@ -44,6 +46,9 @@ class App {
         controllers.forEach((controller) => {
             this.app.use('/api/', controller.router);
         });
+    }
+    initializeDatabase() {
+        databaseHelper_1.default.connect(process.env.MONGODB_URL);
     }
 }
 exports.default = App;

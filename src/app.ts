@@ -5,6 +5,7 @@ import Controller from './interfaces/controller.interface';
 import errorMiddleware from './middleware/error.middleware';
 import { logMiddleware } from './utils/loggingHelper';
 import * as cors from 'cors';
+import Database from './utils/databaseHelper';
 const Helmet = require("helmet");
 
 class App {
@@ -17,6 +18,7 @@ class App {
     this.initializeMiddlewares();
     this.initializeControllers(controllers);
     this.initializeErrorHandling();
+    this.initializeDatabase();
   }
 
   public listen(): express.Application {
@@ -53,6 +55,10 @@ class App {
     controllers.forEach((controller) => {
       this.app.use('/api/', controller.router);
     });
+  }
+
+  private initializeDatabase() {
+    Database.connect(process.env.MONGODB_URL);
   }
 }
 
