@@ -4,8 +4,7 @@ require('dotenv').config()
 // additional
 import App from './app';
 // controller
-import AuthenticationController from './authentication/authentication.controller';
-import GuestController from './guest/guest.controller';
+import AuthenticationController from './auth/auth.controller';
 
 // for cert
 import * as http from "http"
@@ -13,8 +12,7 @@ import * as http from "http"
 // create express application
 const app = new App(
   [
-    new AuthenticationController(),
-    new GuestController(),
+    new AuthenticationController()
   ],
 );
 

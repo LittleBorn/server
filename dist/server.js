@@ -6,14 +6,12 @@ require('dotenv').config();
 // additional
 const app_1 = require("./app");
 // controller
-const authentication_controller_1 = require("./authentication/authentication.controller");
-const guest_controller_1 = require("./guest/guest.controller");
+const auth_controller_1 = require("./auth/auth.controller");
 // for cert
 const http = require("http");
 // create express application
 const app = new app_1.default([
-    new authentication_controller_1.default(),
-    new guest_controller_1.default(),
+    new auth_controller_1.default()
 ]);
 // returns app instance
 const server = app.listen();
