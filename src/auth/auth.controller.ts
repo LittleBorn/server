@@ -3,6 +3,7 @@ import { IRegisterUser } from '../interfaces/registerUser.interface';
 import Controller from '../interfaces/controller.interface';
 import { auth, createUserWithEmailAndPassword, sendEmailVerification } from "../utils/firebaseHelper";
 import registerMiddleware from '../middleware/register.middleware';
+import UserModel from '../schemas/user.schema';
 
 
 class AuthenticationController implements Controller {
@@ -22,14 +23,27 @@ class AuthenticationController implements Controller {
   }
 
   private register = async (request: Request, response: Response, next: NextFunction) => {
-    console.log("Register...")
     const user: IRegisterUser = request.body;
     try {
-      const userCredential = await createUserWithEmailAndPassword(auth, user.email, user.password);
-      await sendEmailVerification(userCredential.user);
-      console.log(userCredential)
-      response.send(userCredential);
+      const firebaseCredentails = await createUserWithEmailAndPassword(auth, user.email, user.password);
+      await sendEmailVerification(firebaseCredentails.user);
+      console.log({
+        email: user.email,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        children: [],
+        firebase: firebaseCredentails.user
+      })
+      const res = await UserModel.create({
+        email: user.email,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        children: [],
+        firebase: firebaseCredentails.user
+      })
+      response.status(200).json(res);
     } catch (error) {
+      console.log(error)
       response.json({
         error: error.code,
         message: error.message
