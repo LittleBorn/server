@@ -3,7 +3,8 @@ import { initializeApp } from "firebase/app";
 import { 
   getAuth, 
   createUserWithEmailAndPassword, 
-  sendEmailVerification
+  sendEmailVerification,
+  signInWithEmailAndPassword
 } from "firebase/auth";
 
 // Your web app's Firebase configuration
@@ -20,8 +21,14 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
+// keeps application stateless
+auth.onAuthStateChanged(() => {
+  auth.signOut();
+})
+
 export {
   auth,
   createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
   sendEmailVerification
 }

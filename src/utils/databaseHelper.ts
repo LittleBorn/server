@@ -22,7 +22,7 @@ class Database { // Singleton
 
   async connect(connectionString: string) {
     try {
-      await mongoose.connect(connectionString, {useNewUrlParser: true, useUnifiedTopology: true});
+      await mongoose.connect(connectionString, {useNewUrlParser: true, useUnifiedTopology: true, dbName: 'LittleBorn'});
     } catch (error) {
       console.error(error);
     }
