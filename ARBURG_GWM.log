@@ -46,3 +46,16 @@
 [INFO] Request from: ::1 on Ressource: /api/auth/login at: Fri, 01 Jul 2022 21:00:30 GMT
 [INFO] Request from: ::1 on Ressource: /api/auth/login at: Fri, 01 Jul 2022 21:00:33 GMT
 [INFO] Request from: ::1 on Ressource: /api/auth/register at: Fri, 01 Jul 2022 21:00:59 GMT
+[INFO] Request from: ::1 on Ressource: /api/auth/register at: Sat, 02 Jul 2022 08:21:22 GMT
+[INFO] Request from: ::1 on Ressource: /api/auth/register at: Sat, 02 Jul 2022 08:24:31 GMT
+[INFO] Request from: ::1 on Ressource: /api/auth/login at: Sat, 02 Jul 2022 08:26:07 GMT
+[INFO] Request from: ::1 on Ressource: /api/auth/login at: Sat, 02 Jul 2022 08:28:09 GMT
+[INFO] Request from: ::1 on Ressource: /api/auth/login at: Sat, 02 Jul 2022 08:28:16 GMT
+[INFO] Request from: ::1 on Ressource: /api/auth/login at: Sat, 02 Jul 2022 08:28:18 GMT
+[INFO] Request from: ::1 on Ressource: /api/auth/login at: Sat, 02 Jul 2022 08:28:20 GMT
+[INFO] Request from: ::1 on Ressource: /api/auth/logout at: Sat, 02 Jul 2022 08:41:57 GMT
+[INFO] Request from: ::1 on Ressource: /api/auth/logout at: Sat, 02 Jul 2022 08:42:43 GMT
+[INFO] Request from: ::1 on Ressource: /api/auth/logout at: Sat, 02 Jul 2022 08:44:53 GMT
+[INFO] Request from: ::1 on Ressource: /api/auth/logout at: Sat, 02 Jul 2022 08:45:32 GMT
+[INFO] Request from: ::1 on Ressource: /api/auth/register at: Sat, 02 Jul 2022 08:56:16 GMT
+[INFO] Request from: ::1 on Ressource: /api/auth/login at: Sat, 02 Jul 2022 08:56:21 GMT

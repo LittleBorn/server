@@ -1,47 +1,42 @@
 import UserModel from "../schemas/user.schema";
 import { auth, createUserWithEmailAndPassword, sendEmailVerification } from "../utils/firebaseHelper";
 import { IRegisterUser } from "../interfaces/registerUser.interface";
+import TokenModel from "../schemas/token.schema";
+import * as jwt from "jsonwebtoken";
+import { User } from "firebase/auth";
 
 export default class RegisterService{
 
-    private user: IRegisterUser;
-    private firebaseUserData: any;
-    private databaseUserData: any;
+    constructor(){}
 
-    constructor(user: IRegisterUser){
-        this.user = user;
+    createUserAtFirebase = async (usr: IRegisterUser): Promise<User> => {
+        const {user} = await createUserWithEmailAndPassword(auth, usr.email, usr.password);
+        return user;
     }
 
-    createUserAtFirebase = async () => {
-        const firebaseCredentails = await createUserWithEmailAndPassword(auth, this.user.email, this.user.password);
-        this.firebaseUserData = firebaseCredentails.user;
+    sendEmailVerification = async (usr: User) => {
+        await sendEmailVerification(usr);
     }
 
-    sendEmailVerification = async () => {
-        await sendEmailVerification(this.firebaseUserData);
-    }
-
-    createUserAtDatabase = async () => {
-        this.databaseUserData = await UserModel.create({
-            email: this.user.email,
-            firstName: this.user.firstName,
-            lastName: this.user.lastName,
-            created_at: new Date(Date.now()),
-            updated_at: new Date(Date.now()),
+    createUserAtDatabase = async (usr: IRegisterUser, fbUser: User) => {
+        return await UserModel.create({
+            fb_id: fbUser.uid,
+            email: usr.email,
+            firstName: usr.firstName,
+            lastName: usr.lastName,
             children: [],
             // logic to remove circular dependencys
-            firebase: JSON.parse(JSON.stringify(this.firebaseUserData))
+            firebase: JSON.parse(JSON.stringify(fbUser))
         })
     }
 
-    createTokenForUser = (): Promise<string> => {
-        return new Promise((resolve, reject) => {
-            resolve("token");
+    generateAuthToken = async (from: string, payload: any): Promise<any> => {
+        const jwtToken = jwt.sign(JSON.stringify(payload), process.env.JWT_SECRET);
+        const dbTokenResult = await TokenModel.create({
+            token: jwtToken,
+            from: from 
         })
-    }
-
-    getResponse = async () => {
-        return this.databaseUserData;
+        return dbTokenResult;
     }
 
 }
