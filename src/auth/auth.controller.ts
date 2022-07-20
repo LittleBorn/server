@@ -11,6 +11,7 @@ import { get } from '../utils/shopifyHelper';
 import { IShopifyCustomer } from '../interfaces/Shopify/IShopifyCustomer.interface';
 import { AuthService } from './auth.service';
 
+import * as bcrypt from "bcrypt"
 
 class AuthenticationController implements Controller {
   public path = '/auth';
@@ -29,12 +30,18 @@ class AuthenticationController implements Controller {
   }
 
   private register = async (request: Request, response: Response, next: NextFunction) => {
-    
+    const user: IRegisterUser = request.body;
+    const id: string = await this.authService.register(user);
+    if(id){
+      response.status(200).json({id})
+    }else{
+      response.status(400).json({});
+    }
   }
 
   private login = async (request: Request, response: Response, next: NextFunction) => {
     const user: ILoginUser = request.body;
-    const token: string = await this.authService.login(user)
+    const token: string = await this.authService.login(user);
     if(token){
       response.status(200).json({token})
     }else{
