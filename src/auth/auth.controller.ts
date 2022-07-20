@@ -31,7 +31,7 @@ class AuthenticationController implements Controller {
 
   private register = async (request: Request, response: Response, next: NextFunction) => {
     const user: IRegisterUser = request.body;
-    const id: string = await this.authService.register(user);
+    const id: any = await this.authService.register(user);
     if(id){
       response.status(200).json({id})
     }else{

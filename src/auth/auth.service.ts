@@ -4,6 +4,8 @@ import { IShopifyCustomer } from "../interfaces/Shopify/IShopifyCustomer.interfa
 import { get, post } from "../utils/shopifyHelper";
 import * as bcrypt from "bcrypt"
 import UserModel from "../schemas/user.schema";
+import * as jwt from "jsonwebtoken";
+import TokenModel from "../schemas/token.schema";
 
 export class AuthService{
 
@@ -31,13 +33,22 @@ export class AuthService{
         // })
         // debug
         const result = {customer: {id: "klasjdlkasjd"+ Date.now().toString()}}
+
         const passwordHash = await bcrypt.hash(user.password, 10);
+
         await UserModel.create({
             id: result.customer.id,
             password_hash: passwordHash,
             customer: result.customer,
         })
-        return result.customer.id;
+
+        const jwtToken = jwt.sign(JSON.stringify(result.customer), process.env.JWT_SECRET);
+
+        const dbTokenResult = await TokenModel.create({
+            token: jwtToken,
+            from: result.customer.id 
+        })
+        return dbTokenResult;
     }
 
 }
