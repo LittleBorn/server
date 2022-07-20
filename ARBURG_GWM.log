@@ -59,3 +59,12 @@
 [INFO] Request from: ::1 on Ressource: /api/auth/logout at: Sat, 02 Jul 2022 08:45:32 GMT
 [INFO] Request from: ::1 on Ressource: /api/auth/register at: Sat, 02 Jul 2022 08:56:16 GMT
 [INFO] Request from: ::1 on Ressource: /api/auth/login at: Sat, 02 Jul 2022 08:56:21 GMT
+[INFO] Request from: ::1 on Ressource: /%PUBLIC_URL%/manifest.json at: Wed, 20 Jul 2022 15:27:09 GMT
+[INFO] Request from: ::1 on Ressource: /favicon.ico at: Wed, 20 Jul 2022 15:27:09 GMT
+[INFO] Request from: ::1 on Ressource: /api/auth/login at: Wed, 20 Jul 2022 15:27:12 GMT
+[INFO] Request from: ::1 on Ressource: /api/auth/login at: Wed, 20 Jul 2022 15:35:25 GMT
+[INFO] Request from: ::1 on Ressource: /api/auth/login at: Wed, 20 Jul 2022 15:41:43 GMT
+[INFO] Request from: ::1 on Ressource: /api/auth/login at: Wed, 20 Jul 2022 15:42:22 GMT
+[INFO] Request from: ::1 on Ressource: /api/auth/login at: Wed, 20 Jul 2022 15:42:50 GMT
+[INFO] Request from: ::1 on Ressource: /api/auth/login at: Wed, 20 Jul 2022 15:43:29 GMT
+[INFO] Request from: ::1 on Ressource: /api/auth/login at: Wed, 20 Jul 2022 15:44:47 GMT

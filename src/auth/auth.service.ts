@@ -1,17 +1,15 @@
-import TokenModel from "../schemas/token.schema";
-import * as jwt from "jsonwebtoken"
+import { ILoginUser } from "../interfaces/loginUser.interface";
+import { IShopifyCustomer } from "../interfaces/Shopify/IShopifyCustomer.interface";
+import { get } from "../utils/shopifyHelper";
 
-export default class AuthService{
+export class AuthService{
 
-    constructor(){
-    }
-    
-    removeTokenFromDatabase = async (token: string) => {
-        await TokenModel.deleteOne({token: token});
-    }
+    async login(user: ILoginUser): Promise<string>{
+        const result = await get<{customers: IShopifyCustomer[]}>("customers");
 
-    decodeToken = async (token: string) => {
-        return await jwt.verify(token, process.env.JWT_SECRET);
+        return new Promise<string>((resolve, reject) => {
+
+        })
     }
 
 }
