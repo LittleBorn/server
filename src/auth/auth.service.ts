@@ -3,19 +3,25 @@ import { ILoginUser } from "../interfaces/loginUser.interface";
 import { IShopifyCustomer } from "../interfaces/Shopify/IShopifyCustomer.interface";
 import { get, post } from "../utils/shopifyAdminHelper";
 import { adminAuth } from "../utils/firebaseAdminHelper";
+import { SessionCookieOptions } from "firebase-admin/auth";
 
 export class AuthService {
 
     async login(user: ILoginUser): Promise<string> {
-        const result = await get<{ customers: IShopifyCustomer[] }>("customers");
+        const result = await get<{ customers: IShopifyCustomer[] }>(`customers/search.json?query=email:test@shopify.com`);
 
         return new Promise<string>((resolve, reject) => {
-            const customer = result.customers.find(customer => customer.email == user.email);
-            // check password of customer
-            if (true /* Password is correct */) {
-
-            } else {
-                return undefined;
+            if(result.customers.length === 1){
+                const customer = result.customers[0];
+                // check password of customer
+                
+                if (true /* Password is correct */) {
+                    
+                } else {
+                    // error credentials wrong
+                }
+            }else{
+                // authentication failure
             }
         })
     }
@@ -101,7 +107,12 @@ export class AuthService {
         // create custom token with admin api
         const customToken = await adminAuth.createCustomToken(shopifyUserCredentials.customer.id);
 
-        return customToken;
+        return customToken; 
+    }
+
+    async generateSessionCookie(idToken: string): Promise<string>{
+        const sessionOptions: SessionCookieOptions = { expiresIn: 3600 }
+        return await adminAuth.createSessionCookie(idToken, sessionOptions);
     }
 
     async addUserToShopify(user: IRegisterUser) {
