@@ -6,24 +6,30 @@ import * as bcrypt from "bcrypt"
 import UserModel from "../schemas/user.schema";
 import * as jwt from "jsonwebtoken";
 import TokenModel from "../schemas/token.schema";
+import { db } from "../utils/firebaseHelper"
+import { addDoc, collection } from "firebase/firestore";
+import { adminAuth } from "../utils/firebaseAdminHelper";
 
-export class AuthService{
 
-    async login(user: ILoginUser): Promise<string>{
-        const result = await get<{customers: IShopifyCustomer[]}>("customers");
+export class AuthService {
+
+    async login(user: ILoginUser): Promise<string> {
+        const result = await get<{ customers: IShopifyCustomer[] }>("customers");
 
         return new Promise<string>((resolve, reject) => {
             const customer = result.customers.find(customer => customer.email == user.email);
             // check password of customer
-            if(true /* Password is correct */){
-                
-            }else{
+            if (true /* Password is correct */) {
+
+            } else {
                 return undefined;
             }
         })
     }
 
-    async register(user: IRegisterUser): Promise<any>{
+    async register(user: IRegisterUser): Promise<any> {
+
+        // create new customer in shopify
         // const result = await post<{customer: IShopifyCustomer}>("customers", {
         //     customer: {
         //         first_name: user.firstName,
@@ -31,24 +37,24 @@ export class AuthService{
         //         email: user.email
         //     }
         // })
+
         // debug
-        const result = {customer: {id: "klasjdlkasjd"+ Date.now().toString()}}
+        const result = { customer: { id: "klasjdlkasjd" + Date.now().toString() } }
 
-        const passwordHash = await bcrypt.hash(user.password, 10);
+        // add new customer to firestore
+        try {
+            const docRef = await addDoc(collection(db, "users"), {
+                id: result.customer.id,
+                customer: result.customer,
+            });
+        } catch (e) {
+            console.log("Error writing to Firestore")
+        }
 
-        await UserModel.create({
-            id: result.customer.id,
-            password_hash: passwordHash,
-            customer: result.customer,
-        })
+        // create custom token with admin api
+        const customToken = await adminAuth.createCustomToken(result.customer.id);
 
-        const jwtToken = jwt.sign(JSON.stringify(result.customer), process.env.JWT_SECRET);
-
-        const dbTokenResult = await TokenModel.create({
-            token: jwtToken,
-            from: result.customer.id 
-        })
-        return dbTokenResult;
+        return customToken;
     }
 
 }
