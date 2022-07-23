@@ -1,7 +1,7 @@
 import { IRegisterUser } from "../interfaces/registerUser.interface";
 import { ILoginUser } from "../interfaces/loginUser.interface";
 import { IShopifyCustomer } from "../interfaces/Shopify/IShopifyCustomer.interface";
-import { get, post } from "../utils/shopifyHelper";
+import { get, post } from "../utils/shopifyAdminHelper";
 import { adminAuth } from "../utils/firebaseAdminHelper";
 
 export class AuthService {
@@ -27,12 +27,12 @@ export class AuthService {
         const shopifyUserCredentials = {
             "customer": {
                 "id": 6522878918921 + Date.now().toString(),
-                "email": "paul-d-f@web.de",
+                "email": user.email,
                 "accepts_marketing": false,
                 "created_at": "2022-07-16T10:54:15+02:00",
                 "updated_at": "2022-07-16T10:54:59+02:00",
-                "first_name": "Paul",
-                "last_name": "Test",
+                "first_name": user.firstName,
+                "last_name": user.lastName,
                 "orders_count": 1,
                 "state": "disabled",
                 "total_spent": "130.90",
@@ -52,7 +52,7 @@ export class AuthService {
                         "first_name": "Paul",
                         "last_name": "test",
                         "company": "",
-                        "address1": "Kurpromenade 123",
+                        "address1": "Test 123",
                         "address2": "",
                         "city": "DTW",
                         "province": "",

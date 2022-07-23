@@ -7,7 +7,7 @@ import { ILoginUser } from '../interfaces/loginUser.interface';
 import registerMiddleware from '../middleware/register.middleware';
 import loginMiddleware from '../middleware/login.middleware';
 import checkTokenMiddleware from '../middleware/checkToken.middleware';
-import { get } from '../utils/shopifyHelper';
+import { get } from '../utils/shopifyAdminHelper';
 import { IShopifyCustomer } from '../interfaces/Shopify/IShopifyCustomer.interface';
 import { AuthService } from './auth.service';
 
