@@ -3,4 +3,5 @@ export interface IRegisterUser {
     firstName: string;
     lastName: string;
     password: string;
+    acceptsMarketing: boolean;
 }

@@ -5,7 +5,7 @@ async function registerMiddleware(request: Request, response: Response, next: Ne
 
   const user = request.body;
 
-  if(typeof user.email === 'undefined' || typeof user.firstName === 'undefined' || typeof user.lastName === 'undefined' || typeof user.password === 'undefined') {
+  if(typeof user.email === 'undefined' || typeof user.firstName === 'undefined' || typeof user.lastName === 'undefined' || typeof user.password === 'undefined' || typeof user.acceptsMarketing === 'undefined') {
     next(new InvalidArgumentException())
   }else{
     next();
