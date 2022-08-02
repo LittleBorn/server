@@ -5,8 +5,8 @@ import { ILoginUser } from '../interfaces/loginUser.interface';
 
 import registerMiddleware from '../middleware/register.middleware';
 import loginMiddleware from '../middleware/login.middleware';
-import checkTokenMiddleware from '../middleware/checkToken.middleware';
 import { AuthService } from './auth.service';
+import authMiddleware from '../middleware/auth.middleware';
 
 class AuthenticationController implements Controller {
   public path = '/auth';
@@ -21,7 +21,7 @@ class AuthenticationController implements Controller {
   private initializeRoutes() {
     this.router.post(`${this.path}/login`, loginMiddleware,this.login);
     this.router.post(`${this.path}/register`, registerMiddleware, this.register);
-    this.router.get(`${this.path}/logout`, checkTokenMiddleware, this.logout);
+    this.router.get(`${this.path}/logout`, authMiddleware, this.logout);
   }
 
   private register = async (request: Request, response: Response, next: NextFunction) => {
@@ -39,7 +39,7 @@ class AuthenticationController implements Controller {
   }
 
   private logout = async(request: Request, response: Response, next: NextFunction) => {
-    
+    response.send("TEST");
   }
 
 

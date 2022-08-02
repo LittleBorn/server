@@ -1,5 +1,7 @@
-import AuthTokenException from 'exceptions/AuthTokenException';
+import AuthTokenException from '../exceptions/AuthTokenException';
 import { NextFunction, Response, Request } from 'express';
+import { AuthService } from '../auth/auth.service';
+import NotAuthorizedException from '../exceptions/NotAuthorizedException';
 
 async function authMiddleware(request: Request, response: Response, next: NextFunction) {
 
@@ -14,15 +16,14 @@ async function authMiddleware(request: Request, response: Response, next: NextFu
       console.log("AUTH MIDDLEWARE TRIGGERED")
       console.log(token)
 
-      // search in cache for token
-      // if not found, search in database
-      // TokenModel.findOne({token: token}, (err: any, token: any) => {
-      //   if(err){
-      //     next(new AuthTokenException())
-      //   }
-      // });
-      // if not found, throw exception
+      const authService = new AuthService()
+      const userAuthenticated: boolean = await authService.authenticateClient(token);
 
+      if(userAuthenticated){
+        next();
+      }else{
+        next(new NotAuthorizedException())
+      }
     }
   }catch{
     next(new AuthTokenException())
