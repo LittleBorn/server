@@ -2,7 +2,7 @@ import { sendStorefrontQuery } from "../utils/shopifyStorefrontHelper";
 
 export class AuthService {
 
-    async authenticateClient(accessToken: string) {
+    async authenticateClient(accessToken: string)  {
         var data = JSON.stringify({
             query: `query {
             customer(customerAccessToken: "${accessToken}") {

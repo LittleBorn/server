@@ -1,7 +1,8 @@
 import axios from "axios"
 
 export const sendStorefrontQuery = <T>(data: string) => {
-  
+  // todo umsteigen auf admin api
+
   var config = {
     method: 'post',
     url: 'https://littleborn.myshopify.com/api/2022-07/graphql.json',
