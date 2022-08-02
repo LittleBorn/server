@@ -11,6 +11,9 @@ async function authMiddleware(request: Request, response: Response, next: NextFu
       next(new AuthTokenException())
     }else{
       
+      console.log("AUTH MIDDLEWARE TRIGGERED")
+      console.log(token)
+
       // search in cache for token
       // if not found, search in database
       // TokenModel.findOne({token: token}, (err: any, token: any) => {

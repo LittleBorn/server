@@ -3,7 +3,6 @@ import * as cookieParser from 'cookie-parser';
 import * as express from 'express';
 import Controller from './interfaces/controller.interface';
 import errorMiddleware from './middleware/error.middleware';
-import { logMiddleware } from './utils/loggingHelper';
 import * as cors from 'cors';
 import Database from './utils/databaseHelper';
 const Helmet = require("helmet");
@@ -37,7 +36,6 @@ class App {
   } 
 
   private initializeMiddlewares() {
-    this.app.use(logMiddleware)
     this.app.use(Helmet())
     this.app.use(cors())
     this.app.use(bodyParser.json());
