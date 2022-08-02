@@ -5,6 +5,6 @@ export interface IChild{
     weight: string;
     gender: string;
     birthDate: Date;
-    created_at?: string;
-    updated_at?: string;
+    created_at: string;
+    changed_at: string;
 }

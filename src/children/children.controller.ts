@@ -3,7 +3,7 @@ import validateChildMiddleware from '../middleware/validation/validateChildMiddl
 import Controller from '../interfaces/controller.interface';
 import authMiddleware from '../middleware/auth.middleware';
 import { create } from './children.service';
-import { IChild } from 'interfaces/child.interface';
+import { IClientChild } from '../interfaces/Child/IClientChild.interface';
 
 class AuthenticationController implements Controller {
   public path = '/children';
@@ -19,7 +19,7 @@ class AuthenticationController implements Controller {
   }
 
   private addChild = async(request: Request, response: Response, next: NextFunction) => {
-    const child: IChild = request.body;
+    const child: IClientChild = request.body;
     const result = await create(child);
   }
 
