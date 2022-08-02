@@ -16,3 +16,7 @@ export const create = async (child: IClientChild) => {
 
     return dbChild;
 }
+
+export const remove = async (id: string) => {
+
+}
