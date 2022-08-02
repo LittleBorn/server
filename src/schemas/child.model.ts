@@ -7,8 +7,8 @@ const ChildSchema = new mongoose.Schema({
     weight: { type: String, required: true },
     gender: { type: String, required: true },
     birthDate: { type: Date, required: true },
-    created_at: { type: String, required: true },
-    updated_at: { type: String, required: true }
+    created_at: { type: String, required: false },
+    updated_at: { type: String, required: false }
 });
 
 const ChildModel = mongoose.model("children", ChildSchema);
