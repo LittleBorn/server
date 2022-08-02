@@ -12,10 +12,7 @@ async function authMiddleware(request: Request, response: Response, next: NextFu
     if(typeof token === 'undefined') {
       next(new AuthTokenException())
     }else{
-      
-      console.log("AUTH MIDDLEWARE TRIGGERED")
-      console.log(token)
-
+    
       const authService = new AuthService()
       const userAuthenticated: boolean = await authService.authenticateClient(token);
 
