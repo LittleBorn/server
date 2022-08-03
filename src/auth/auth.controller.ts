@@ -18,7 +18,7 @@ class AuthenticationController implements Controller {
   }
 
   private logout = async(request: Request, response: Response, next: NextFunction) => {
-    response.send("TEST");
+    response.send(JSON.stringify(new Date()));
   }
 }
 

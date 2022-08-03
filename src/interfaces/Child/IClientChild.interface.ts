@@ -1,7 +1,7 @@
 export interface IClientChild{
     firstName: string;
-    height: string;
-    weight: string;
+    height: number;
+    weight: number;
     gender: string;
     birthDate: Date;
 }

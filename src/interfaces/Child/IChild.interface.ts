@@ -1,8 +1,8 @@
 export interface IChild{
-    id: string;
+    _id: string;
     firstName: string;
-    height: string;
-    weight: string;
+    height: number;
+    weight: number;
     gender: string;
     birthDate: Date;
     created_at: string;

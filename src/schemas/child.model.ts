@@ -1,7 +1,6 @@
 import * as mongoose from 'mongoose';
 
 const ChildSchema = new mongoose.Schema({
-    id: { type: String, required: true },
     firstName: { type: String, required: true },
     height: { type: String, required: true },
     weight: { type: String, required: true },
