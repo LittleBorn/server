@@ -5,6 +5,7 @@ require('dotenv').config()
 import App from './app';
 // controller
 import AuthenticationController from './auth/auth.controller';
+import ChildrenController from './children/children.controller';
 
 // for cert 
 import * as http from "http"
@@ -12,7 +13,8 @@ import * as http from "http"
 // create express application
 const app = new App(
   [
-    new AuthenticationController()
+    new AuthenticationController(),
+    new ChildrenController
   ],
 );
 

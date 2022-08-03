@@ -5,7 +5,7 @@ import authMiddleware from '../middleware/auth.middleware';
 import { create, remove } from './children.service';
 import { IClientChild } from '../interfaces/Child/IClientChild.interface';
 
-class AuthenticationController implements Controller {
+class ChildrenController implements Controller {
   public path = '/children';
   public router = Router();
 
@@ -33,4 +33,4 @@ class AuthenticationController implements Controller {
 
 }
 
-export default AuthenticationController;
+export default ChildrenController;
