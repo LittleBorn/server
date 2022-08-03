@@ -19,4 +19,21 @@ export class AuthService {
         }
     }
 
+    async getCustomerIdWithAccessToken(accessToken: string): Promise<undefined|string> {
+        var data = JSON.stringify({
+            query: `query {
+            customer(customerAccessToken: "${accessToken}") {
+              id
+            }
+          }`,
+            variables: {}
+        });
+        const result = await sendStorefrontQuery<{ data: { customer: { id: string; } | null } }>(data);
+        if(result.data?.customer && typeof result.data?.customer?.id == "string"){
+            return result.data?.customer?.id;
+        }else{
+            return undefined;
+        }
+    }
+
 }

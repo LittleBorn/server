@@ -1,18 +1,21 @@
-import ChildModel from "../schemas/child.model";
-import { IClientChild } from "../interfaces/Child/IClientChild.interface";
+import { AuthService } from "../auth/auth.service";
+import { IClientCustomer } from "interfaces/Customer/IClientCustomer.interface";
+import CustomerModel from "../schemas/customer.model";
  
-export const create = async (child: IClientChild) => {
-    const dbChild = await ChildModel.create({
-        firstName: child.firstName,
-        height: child.height,
-        weight: child.weight,
-        gender: child.gender,
-        birthDate: child.birthDate,
-        created_at: new Date().valueOf(),
-        updated_at: new Date().valueOf()
-    });
+export const create = async (customer: IClientCustomer) => {
 
-    return dbChild;
+    const authService = new AuthService();
+    const customerId: string = await authService.getCustomerIdWithAccessToken(customer.shopifyId);
+    try{
+        const dbCustomer = await CustomerModel.create({
+            shopifyId: customerId,
+            children: []
+        });
+    
+        return dbCustomer;
+    }catch(e){
+        return undefined;
+    }
 }
 
 export const remove = async (id: string) => {
