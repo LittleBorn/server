@@ -10,7 +10,7 @@ class ChildrenController implements Controller {
   public router = Router();
 
   constructor() {
-    console.log("Initialize Authentication...")
+    console.log("Initialize Children Controller...")
     this.initializeRoutes();
   }
 

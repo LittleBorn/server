@@ -6,6 +6,7 @@ import App from './app';
 // controller
 import AuthenticationController from './auth/auth.controller';
 import ChildrenController from './children/children.controller';
+import CustomerController from './customer/customer.controller';
 
 // for cert 
 import * as http from "http"
@@ -14,7 +15,8 @@ import * as http from "http"
 const app = new App(
   [
     new AuthenticationController(),
-    new ChildrenController
+    new ChildrenController(),
+    new CustomerController()
   ],
 );
 

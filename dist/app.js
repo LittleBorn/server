@@ -4,7 +4,6 @@ const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const express = require("express");
 const error_middleware_1 = require("./middleware/error.middleware");
-const loggingHelper_1 = require("./utils/loggingHelper");
 const cors = require("cors");
 const databaseHelper_1 = require("./utils/databaseHelper");
 const Helmet = require("helmet");
@@ -30,7 +29,6 @@ class App {
         this.app.use(express.static("client/build"));
     }
     initializeMiddlewares() {
-        this.app.use(loggingHelper_1.logMiddleware);
         this.app.use(Helmet());
         this.app.use(cors());
         this.app.use(bodyParser.json());

@@ -8,7 +8,7 @@ async function authMiddleware(request: Request, response: Response, next: NextFu
   const authHeader: string = request.headers.authorization;
 
   try{
-    const token = authHeader.split(' ')[1];
+    const token: string = authHeader.split(' ')[1];
     if(typeof token === 'undefined') {
       next(new AuthTokenException())
     }else{
@@ -17,6 +17,7 @@ async function authMiddleware(request: Request, response: Response, next: NextFu
       const userAuthenticated: boolean = await authService.authenticateClient(token);
 
       if(userAuthenticated){
+        request.headers.token = token;
         next();
       }else{
         next(new NotAuthorizedException())
