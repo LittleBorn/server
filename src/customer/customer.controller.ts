@@ -18,11 +18,15 @@ class CustomerController implements Controller {
 
   private initializeRoutes() {
     this.router.post(`${this.path}/`, authMiddleware, validateCreateCustomerMiddleware, this.addCustomer);
+    this.router.get(`${this.path}/:id`, authMiddleware, this.getCustomer);
+    this.router.delete(`${this.path}/:id`, authMiddleware, this.removeCustomer);
+    this.router.put(`${this.path}/`, authMiddleware, validateCreateCustomerMiddleware, this.modifyCustomer);
+
     this.router.get(`${this.path}/addChildAssociation/:id`, authMiddleware, this.addChildAssociation);
-    // this.router.delete(`${this.path}/:id`, authMiddleware, this.removeChild);
   }
 
   private getCustomer = async(request: Request, response: Response, next: NextFunction) => {
+    const customerId: string = request.params.id;
 
   }
 
@@ -33,10 +37,11 @@ class CustomerController implements Controller {
   }
 
   private removeCustomer = async(request: Request, response: Response, next: NextFunction) => {
+    const customerId: string = request.params.id;
 
   }
 
-  private changeCustomer = async(request: Request, response: Response, next: NextFunction) => {
+  private modifyCustomer = async(request: Request, response: Response, next: NextFunction) => {
 
   }
 
@@ -61,6 +66,10 @@ class CustomerController implements Controller {
     }else{
       response.status(402).json({ err: "fehler beim auslesen der paramenter" });
     }
+  }
+
+  private removeChildAssociation = async(request: Request, response: Response, next: NextFunction) => {
+
   }
 
 }
