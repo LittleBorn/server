@@ -17,6 +17,7 @@ class ChildrenController implements Controller {
   private initializeRoutes() {
     this.router.post(`${this.path}/`, authMiddleware, validateChildMiddleware , this.addChild);
     this.router.delete(`${this.path}/:id`, authMiddleware, this.removeChild);
+    
   }
 
   private addChild = async(request: Request, response: Response, next: NextFunction) => {
