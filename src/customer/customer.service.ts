@@ -1,23 +1,34 @@
 import { AuthService } from "../auth/auth.service";
 import { IClientCustomer } from "interfaces/Customer/IClientCustomer.interface";
 import CustomerModel from "../schemas/customer.model";
- 
+
 export const create = async (customer: IClientCustomer) => {
 
     const authService = new AuthService();
     const customerId: string = await authService.getCustomerIdWithAccessToken(customer.shopifyId);
-    try{
+    try {
         const dbCustomer = await CustomerModel.create({
             shopifyId: customerId,
             children: []
         });
-    
+
         return dbCustomer;
-    }catch(e){
+    } catch (e) {
         return undefined;
     }
 }
 
 export const remove = async (id: string) => {
 
+}
+
+export const addChildAssociation = async (customerId: string, childrenId: string) => {
+    const customer = await CustomerModel.findOne({ shopifyId: customerId });
+    customer.children.push(childrenId);
+    const savedDoc = await customer.save();
+    if (customer == savedDoc) {
+        return savedDoc;
+    } else {
+        return undefined;
+    }
 }
