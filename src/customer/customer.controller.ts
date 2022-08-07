@@ -4,8 +4,9 @@ import Controller from '../interfaces/controller.interface';
 import authMiddleware from '../middleware/auth.middleware';
 import validateCreateCustomerMiddleware from '../middleware/validation/validateCreateCustomerMiddleware';
 import { IClientCustomer } from 'interfaces/Customer/IClientCustomer.interface';
-import { create } from './customer.service';
+import { addChildAssociation, create, removeChildAssociation } from './customer.service';
 import { AuthService } from '../auth/auth.service';
+import InternalServerErrorException from '../exceptions/InternalServerErrorException';
 
 class CustomerController implements Controller {
   public path = '/customer';
@@ -23,6 +24,7 @@ class CustomerController implements Controller {
     this.router.put(`${this.path}/`, authMiddleware, validateCreateCustomerMiddleware, this.modifyCustomer);
 
     this.router.get(`${this.path}/addChildAssociation/:id`, authMiddleware, this.addChildAssociation);
+    this.router.delete(`${this.path}/removeChildAssociation/:id`, authMiddleware, this.removeChildAssociation);
   }
 
   private getCustomer = async(request: Request, response: Response, next: NextFunction) => {
@@ -51,25 +53,32 @@ class CustomerController implements Controller {
     const authService = new AuthService();
     const customerId: string = await authService.getCustomerIdWithAccessToken(accessToken);
     if(typeof childrenId === "string" && typeof customerId === "string"){
-      try{
-        const customer = await CustomerModel.findOne({shopifyId: customerId});
-        customer.children.push(childrenId);
-        const savedDoc = await customer.save();
-        if(customer == savedDoc){
-          response.json({id: 0, customer: savedDoc});
-        }else{
-          response.json({id: 1, customer: customer});
-        }
-      }catch(e){
-        response.status(402).json({ err: e });
-      }
+      const savedDoc = await addChildAssociation(customerId, childrenId);
+      if(savedDoc){
+        response.json({id: 0, customer: savedDoc});
+      }else{
+        next(new InternalServerErrorException("Unable to change data in the database"));
+      }      
     }else{
-      response.status(402).json({ err: "fehler beim auslesen der paramenter" });
+      next(new InternalServerErrorException("Error occured while processing provided id's"));
     }
   }
 
   private removeChildAssociation = async(request: Request, response: Response, next: NextFunction) => {
-
+    const childrenId: string = request.params.id;
+    const accessToken: string = request.headers.authorization.split(' ')[1];
+    const authService = new AuthService();
+    const customerId: string = await authService.getCustomerIdWithAccessToken(accessToken);
+    if(typeof childrenId === "string" && typeof customerId === "string"){
+      const savedDoc = await removeChildAssociation(customerId, childrenId);
+      if(savedDoc){
+        response.json({id: 0, customer: savedDoc});
+      }else{
+        next(new InternalServerErrorException("Unable to change data in the database"));
+      }      
+    }else{
+      next(new InternalServerErrorException("Error occured while processing provided id's"));
+    }
   }
 
 }

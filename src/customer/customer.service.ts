@@ -22,9 +22,20 @@ export const remove = async (id: string) => {
 
 }
 
-export const addChildAssociation = async (customerId: string, childrenId: string) => {
+export const addChildAssociation = async (customerId: string, childrenId: string): Promise<any | undefined> => {
     const customer = await CustomerModel.findOne({ shopifyId: customerId });
     customer.children.push(childrenId);
+    const savedDoc = await customer.save();
+    if (customer == savedDoc) {
+        return savedDoc;
+    } else {
+        return undefined;
+    }
+}
+
+export const removeChildAssociation = async (customerId: string, childrenId: string): Promise<any | undefined> => {
+    const customer = await CustomerModel.findOne({ shopifyId: customerId });
+    customer.children = customer.children.filter((i: string) => i !== childrenId);
     const savedDoc = await customer.save();
     if (customer == savedDoc) {
         return savedDoc;
