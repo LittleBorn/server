@@ -1,10 +1,16 @@
 export interface IChild{
     _id: string;
     firstName: string;
-    height: number;
-    weight: number;
+    height: Array<{
+        value: number;
+        changed_at: number;
+    }>;
+    weight: Array<{
+        value: number;
+        changed_at: number;
+    }>;
     gender: string;
     birthDate: Date;
-    created_at: string;
-    changed_at: string;
+    created_at: number;
+    changed_at: number;
 }

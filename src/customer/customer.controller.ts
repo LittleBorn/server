@@ -49,7 +49,7 @@ class CustomerController implements Controller {
 
   private removeCustomer = async (request: Request, response: Response, next: NextFunction) => {
     const customerId: string = request.params.id;
-
+    
   }
 
   private modifyCustomer = async (request: Request, response: Response, next: NextFunction) => {
