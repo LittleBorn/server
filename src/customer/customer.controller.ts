@@ -3,8 +3,8 @@ import CustomerModel from '../schemas/customer.model';
 import Controller from '../interfaces/controller.interface';
 import authMiddleware from '../middleware/auth.middleware';
 import validateCreateCustomerMiddleware from '../middleware/validation/validateCreateCustomerMiddleware';
-import { IClientCustomer } from 'interfaces/Customer/IClientCustomer.interface';
-import { addChildAssociation, create, removeChildAssociation } from './customer.service';
+import { IClientCustomer } from '../interfaces/Customer/IClientCustomer.interface';
+import { addChildAssociation, create, get, removeChildAssociation } from './customer.service';
 import { AuthService } from '../auth/auth.service';
 import InternalServerErrorException from '../exceptions/InternalServerErrorException';
 
@@ -27,56 +27,65 @@ class CustomerController implements Controller {
     this.router.delete(`${this.path}/removeChildAssociation/:id`, authMiddleware, this.removeChildAssociation);
   }
 
-  private getCustomer = async(request: Request, response: Response, next: NextFunction) => {
+  private getCustomer = async (request: Request, response: Response, next: NextFunction) => {
     const customerId: string = request.params.id;
-
+    const result: any = await get(customerId);
+    if(result){
+      response.status(200).json(result);
+    }else{
+      next(new InternalServerErrorException("Could not fetch from Database!"));
+    }
   }
 
-  private addCustomer = async(request: Request, response: Response, next: NextFunction) => {
+  private addCustomer = async (request: Request, response: Response, next: NextFunction) => {
     const customer: IClientCustomer = request.body;
     const result = await create(customer);
-    response.status(200).json(result);
+    if(result){
+      response.status(200).json(result);
+    }else{
+      next(new InternalServerErrorException("Could not create Customer at database"));
+    }
   }
 
-  private removeCustomer = async(request: Request, response: Response, next: NextFunction) => {
+  private removeCustomer = async (request: Request, response: Response, next: NextFunction) => {
     const customerId: string = request.params.id;
 
   }
 
-  private modifyCustomer = async(request: Request, response: Response, next: NextFunction) => {
+  private modifyCustomer = async (request: Request, response: Response, next: NextFunction) => {
 
   }
 
-  private addChildAssociation = async(request: Request, response: Response, next: NextFunction) => {
+  private addChildAssociation = async (request: Request, response: Response, next: NextFunction) => {
     const childrenId: string = request.params.id;
     const accessToken: string = request.headers.authorization.split(' ')[1];
     const authService = new AuthService();
     const customerId: string = await authService.getCustomerIdWithAccessToken(accessToken);
-    if(typeof childrenId === "string" && typeof customerId === "string"){
+    if (typeof childrenId === "string" && typeof customerId === "string") {
       const savedDoc = await addChildAssociation(customerId, childrenId);
-      if(savedDoc){
-        response.json({id: 0, customer: savedDoc});
-      }else{
+      if (savedDoc) {
+        response.json({ id: 0, customer: savedDoc });
+      } else {
         next(new InternalServerErrorException("Unable to change data in the database"));
-      }      
-    }else{
+      }
+    } else {
       next(new InternalServerErrorException("Error occured while processing provided id's"));
     }
   }
 
-  private removeChildAssociation = async(request: Request, response: Response, next: NextFunction) => {
+  private removeChildAssociation = async (request: Request, response: Response, next: NextFunction) => {
     const childrenId: string = request.params.id;
     const accessToken: string = request.headers.authorization.split(' ')[1];
     const authService = new AuthService();
     const customerId: string = await authService.getCustomerIdWithAccessToken(accessToken);
-    if(typeof childrenId === "string" && typeof customerId === "string"){
+    if (typeof childrenId === "string" && typeof customerId === "string") {
       const savedDoc = await removeChildAssociation(customerId, childrenId);
-      if(savedDoc){
-        response.json({id: 0, customer: savedDoc});
-      }else{
+      if (savedDoc) {
+        response.json({ id: 0, customer: savedDoc });
+      } else {
         next(new InternalServerErrorException("Unable to change data in the database"));
-      }      
-    }else{
+      }
+    } else {
       next(new InternalServerErrorException("Error occured while processing provided id's"));
     }
   }

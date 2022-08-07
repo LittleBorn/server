@@ -31,7 +31,7 @@ export class AuthService {
         });
         const result = await sendStorefrontQuery<{ data: { customer: { id: string; } | null } }>(data);
         if(result.data?.customer && typeof result.data?.customer?.id == "string"){
-            return decodeShopifyId(result.data?.customer?.id);
+            return result.data?.customer?.id;
         }else{
             return undefined;
         }
