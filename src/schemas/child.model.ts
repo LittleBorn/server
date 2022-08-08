@@ -1,9 +1,14 @@
 import * as mongoose from 'mongoose';
 
+const n_schema = new mongoose.Schema({
+    value: { type: Number, required: true },
+    updated_at: { type: Number, required: true }
+})
+
 const ChildSchema = new mongoose.Schema({
     firstName: { type: String, required: true },
-    height: { type: String, required: true },
-    weight: { type: Array, required: true },
+    height: { type: [n_schema], required: true },
+    weight: { type: [n_schema], required: true },
     gender: { type: String, required: true },
     birthDate: { type: Date, required: true },
     created_at: { type: Number, required: false },
