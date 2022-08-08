@@ -14,7 +14,7 @@ export const get = async (customerId: string) => {
 export const create = async (customer: IClientCustomer) => {
 
     const authService = new AuthService();
-    const customerId: string = await authService.getCustomerIdWithAccessToken(customer.shopifyId);
+    const customerId: string = await authService.getShopifyIdWithAccessToken(customer.shopifyId);
     try {
         const dbCustomer = await CustomerModel.create({
             shopifyId: customerId,
@@ -31,8 +31,8 @@ export const remove = async (id: string) => {
 
 }
 
-export const addChildAssociation = async (customerId: string, childrenId: string): Promise<any | undefined> => {
-    const customer = await CustomerModel.findOne({ shopifyId: customerId });
+export const addChildAssociation = async (shopifyId: string, childrenId: string): Promise<any | undefined> => {
+    const customer = await CustomerModel.findOne({ shopifyId: shopifyId });
     customer.children.push(childrenId);
     const savedDoc = await customer.save();
     if (customer == savedDoc) {
@@ -42,8 +42,8 @@ export const addChildAssociation = async (customerId: string, childrenId: string
     }
 }
 
-export const removeChildAssociation = async (customerId: string, childrenId: string): Promise<any | undefined> => {
-    const customer = await CustomerModel.findOne({ shopifyId: customerId });
+export const removeChildAssociation = async (shopifyId: string, childrenId: string): Promise<any | undefined> => {
+    const customer = await CustomerModel.findOne({ shopifyId: shopifyId });
     customer.children = customer.children.filter((i: string) => i !== childrenId);
     const savedDoc = await customer.save();
     if (customer == savedDoc) {

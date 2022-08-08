@@ -15,20 +15,30 @@ class AuthenticationController implements Controller {
 
   private initializeRoutes() {
     this.router.get(`${this.path}/logout`, authMiddleware, this.logout);
-    this.router.get(`${this.path}/getIdFromAccessToken`, authMiddleware, this.getIdFromAccessToken);
+    this.router.get(`${this.path}/getShopifyIdFromAccessToken`, authMiddleware, this.getShopifyIdFromAccessToken);
+    this.router.get(`${this.path}/getCustomerIdFromAccessToken`, authMiddleware, this.getCustomerIdFromAccessToken);
   }
 
   private logout = async(request: Request, response: Response, next: NextFunction) => {
     response.send(JSON.stringify(new Date()));
   }
 
-  private getIdFromAccessToken = async(request: Request, response: Response, next: NextFunction) => {
+  private getShopifyIdFromAccessToken = async(request: Request, response: Response, next: NextFunction) => {
+    const accessToken: string = request.headers.authorization.split(' ')[1];
+    const shopifyId: string = await this.authService.getShopifyIdWithAccessToken(accessToken);
+    response.status(200).json({
+      id: shopifyId
+    })
+  }
+
+  private getCustomerIdFromAccessToken = async(request: Request, response: Response, next: NextFunction) => {
     const accessToken: string = request.headers.authorization.split(' ')[1];
     const customerId: string = await this.authService.getCustomerIdWithAccessToken(accessToken);
     response.status(200).json({
       id: customerId
     })
   }
+
 }
 
 export default AuthenticationController;

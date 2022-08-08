@@ -1,3 +1,4 @@
+import CustomerModel from "../schemas/customer.model";
 import { decodeShopifyId } from "../utils/formattingHelper";
 import { sendStorefrontQuery } from "../utils/shopifyStorefrontHelper";
 
@@ -20,7 +21,7 @@ export class AuthService {
         }
     }
 
-    async getCustomerIdWithAccessToken(accessToken: string): Promise<undefined|string> {
+    async getShopifyIdWithAccessToken(accessToken: string): Promise<undefined|string> {
         var data = JSON.stringify({
             query: `query {
             customer(customerAccessToken: "${accessToken}") {
@@ -35,6 +36,18 @@ export class AuthService {
         }else{
             return undefined;
         }
+    }
+
+    async getCustomerIdWithAccessToken(accessToken: string): Promise<undefined|string> {
+        
+        const shopifyId: string | undefined = await this.getShopifyIdWithAccessToken(accessToken);
+        if(!shopifyId) return undefined;
+
+        const customer = await CustomerModel.findOne({ shopifyId: shopifyId });
+        if (!customer) return undefined;
+
+        return customer._id;
+
     }
 
 }

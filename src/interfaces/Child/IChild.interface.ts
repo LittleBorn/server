@@ -1,6 +1,6 @@
 export interface IChild{
     _id: string;
-    firstName: string;
+    childName: string;
     height: Array<{
         value: number;
         changed_at: number;

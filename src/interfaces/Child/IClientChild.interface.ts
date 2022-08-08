@@ -1,5 +1,5 @@
 export interface IClientChild{
-    firstName: string;
+    childName: string;
     height: number;
     weight: number;
     gender: string;

@@ -60,9 +60,9 @@ class CustomerController implements Controller {
     const childrenId: string = request.params.id;
     const accessToken: string = request.headers.authorization.split(' ')[1];
     const authService = new AuthService();
-    const customerId: string = await authService.getCustomerIdWithAccessToken(accessToken);
-    if (typeof childrenId === "string" && typeof customerId === "string") {
-      const savedDoc = await addChildAssociation(customerId, childrenId);
+    const shopifyId: string = await authService.getShopifyIdWithAccessToken(accessToken);
+    if (typeof childrenId === "string" && typeof shopifyId === "string") {
+      const savedDoc = await addChildAssociation(shopifyId, childrenId);
       if (savedDoc) {
         response.json({ id: 0, customer: savedDoc });
       } else {
@@ -77,9 +77,9 @@ class CustomerController implements Controller {
     const childrenId: string = request.params.id;
     const accessToken: string = request.headers.authorization.split(' ')[1];
     const authService = new AuthService();
-    const customerId: string = await authService.getCustomerIdWithAccessToken(accessToken);
-    if (typeof childrenId === "string" && typeof customerId === "string") {
-      const savedDoc = await removeChildAssociation(customerId, childrenId);
+    const shopifyId: string = await authService.getShopifyIdWithAccessToken(accessToken);
+    if (typeof childrenId === "string" && typeof shopifyId === "string") {
+      const savedDoc = await removeChildAssociation(shopifyId, childrenId);
       if (savedDoc) {
         response.json({ id: 0, customer: savedDoc });
       } else {

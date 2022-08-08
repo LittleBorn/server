@@ -6,7 +6,7 @@ const n_schema = new mongoose.Schema({
 })
 
 const ChildSchema = new mongoose.Schema({
-    firstName: { type: String, required: true },
+    childName: { type: String, required: true },
     height: { type: [n_schema], required: true },
     weight: { type: [n_schema], required: true },
     gender: { type: String, required: true },

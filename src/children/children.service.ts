@@ -3,7 +3,7 @@ import { IClientChild } from "../interfaces/Child/IClientChild.interface";
  
 export const create = async (child: IClientChild) => {
     const dbChild = await ChildModel.create({
-        firstName: child.firstName,
+        childName: child.childName,
         height: [{
             value: child.height,
             updated_at: Date.now()
