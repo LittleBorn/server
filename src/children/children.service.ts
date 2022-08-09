@@ -1,6 +1,15 @@
 import ChildModel from "../schemas/child.model";
 import { IClientChild } from "../interfaces/Child/IClientChild.interface";
  
+export const get = async (id: string) => {
+    try{
+        const dbChild = await ChildModel.findOne({_id: id});
+        return dbChild;
+    }catch(e){
+        return undefined;
+    }
+}
+
 export const create = async (child: IClientChild) => {
     const dbChild = await ChildModel.create({
         childName: child.childName,
