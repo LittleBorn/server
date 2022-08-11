@@ -1,16 +1,31 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.remove = exports.create = void 0;
+exports.remove = exports.create = exports.get = void 0;
 const child_model_1 = require("../schemas/child.model");
+exports.get = async (id) => {
+    try {
+        const dbChild = await child_model_1.default.findOne({ _id: id });
+        return dbChild;
+    }
+    catch (e) {
+        return undefined;
+    }
+};
 exports.create = async (child) => {
     const dbChild = await child_model_1.default.create({
-        firstName: child.firstName,
-        height: child.height,
-        weight: child.weight,
+        childName: child.childName,
+        height: [{
+                value: child.height,
+                updated_at: Date.now()
+            }],
+        weight: [{
+                value: child.height,
+                updated_at: Date.now()
+            }],
         gender: child.gender,
         birthDate: child.birthDate,
-        created_at: new Date().valueOf(),
-        updated_at: new Date().valueOf()
+        created_at: Date.now(),
+        updated_at: Date.now()
     });
     return dbChild;
 };

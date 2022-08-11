@@ -39,12 +39,12 @@
     "lint": "tslint -p tsconfig.json -c tslint.json",
     "start": "node dist/server.js",
     "dev": "ts-node ./src/server.ts",
-    "dev:client": "cd client && npm run start",
     "build": "tsc --project ./tsconfig.json",
-    "build:client": "cd client && npm run build",
-    "build:all": "npm run build:client && npm run build",
-    "production": "npm run build:client && npm run build && node dist/server.js",
-    "development": "concurrently \"nodemon\""
+    "production": "npm run build && node dist/server.js",
+    "development": "concurrently \"nodemon\"",
+    "docker:build": "docker build . -t pfinkbeiner/littleborn-api",
+    "docker:push": "docker push pfinkbeiner/littleborn-api:latest",
+    "docker": "npm run docker:build && npm run docker:push"
   },
   "author": "Paul Finkbeiner",
   "license": "MIT"

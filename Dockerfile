@@ -1,4 +1,4 @@
-FROM node:14
+FROM node:lts-alpine
 
 # Create app directory
 WORKDIR /usr/src/app
@@ -16,13 +16,13 @@ RUN npm install
 COPY . .
 
 EXPOSE 80 443
-CMD [ "npm", "run", "dev" ]
+CMD [ "npm", "run", "production" ]
 
 # Building the Application 
-# docker build . -t <username>/guest-access
-# docker images -> <username>/guest-access
-# run the image with: docker run -p <port>:443 -d <username>/guest-access
-# docker ps -> <username>/guest-access & container id
+# docker build . -t <username>/littleborn-api
+# docker images -> <username>/littleborn-api
+# run the image with: docker run -p <port>:443 -d <username>/littleborn-api
+# docker ps -> <username>/littleborn-api & container id
 # check outpunt with: docker logs <containerid>
 # enter docker container: docker exec -it <container id> /bin/bash
 # mount volume docker run -v volume:/usr/src/app
