@@ -1,3 +1,4 @@
 node_modules
 .env
 littleborn-54af6-firebase-adminsdk-sa6s0-a47b0fb945.json
+dist/
