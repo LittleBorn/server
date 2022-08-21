@@ -22,9 +22,6 @@ class App {
 
   public listen(): express.Application {
     return this.app;
-    // return this.app.listen(process.env.PORT, () => {
-    //   console.log(`App running on Port: ${process.env.PORT}`);
-    // });
   }
 
   public getServer() {
@@ -56,7 +53,7 @@ class App {
   }
 
   private initializeDatabase() {
-    Database.connect(process.env.MONGODB_URL);
+    Database.connect(process.env.MONGODB_URL || "mongodb://localhost:27017");
   }
 }
 

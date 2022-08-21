@@ -6,7 +6,7 @@ export const get = async <T>(path: string) => {
             method: 'get',
             url: `https://littleborn.myshopify.com/admin/api/2022-07/${path}.json`,
             headers: {
-                'X-Shopify-Access-Token': process.env.SHOPIFY_adminApiAccessToken
+                'X-Shopify-Access-Token': process.env.SHOPIFY_adminApiAccessToken || ""
             }
         };
     
@@ -26,7 +26,7 @@ export const post = async <T>(path: string, data: any) => {
             method: 'post',
             url: `https://littleborn.myshopify.com/admin/api/2022-07/${path}.json`,
             headers: {
-                'X-Shopify-Access-Token': process.env.SHOPIFY_adminApiAccessToken,
+                'X-Shopify-Access-Token': process.env.SHOPIFY_adminApiAccessToken || "",
                 'Content-Type': 'application/json'
             },
             data: data
