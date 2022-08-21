@@ -1,0 +1,12 @@
+version: '3.7'
+
+services:
+  api: 
+    image: pfinkbeiner/littleborn-api:latest
+    ports: 
+      - "5000:5000"
+    environment:
+      - MONGODB_URL=TEST
+      - SHOPIFY_adminApiAccessToken=TEST
+      - REACT_APP_SHOPIFY_TOKEN=28869d2b1c2ac7dbd3998dfed945cd2a
+    restart: unless-stopped
