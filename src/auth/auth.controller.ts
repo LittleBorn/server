@@ -2,6 +2,7 @@ import { Request, Response, NextFunction, Router } from 'express';
 import Controller from '../interfaces/controller.interface';
 import { AuthService } from './auth.service';
 import authMiddleware from '../middleware/auth.middleware';
+import * as cors from "cors"
 
 class AuthenticationController implements Controller {
   public path = '/auth';
@@ -16,7 +17,7 @@ class AuthenticationController implements Controller {
   private initializeRoutes() {
     this.router.get(`${this.path}/logout`, authMiddleware, this.logout);
     this.router.get(`${this.path}/getShopifyIdFromAccessToken`, authMiddleware, this.getShopifyIdFromAccessToken);
-    this.router.get(`${this.path}/getCustomerIdFromAccessToken`, authMiddleware, this.getCustomerIdFromAccessToken);
+    this.router.get(`${this.path}/getCustomerIdFromAccessToken`, cors(), authMiddleware, this.getCustomerIdFromAccessToken);
   }
 
   private logout = async(request: Request, response: Response, next: NextFunction) => {
