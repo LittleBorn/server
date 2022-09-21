@@ -44,7 +44,6 @@ class ChildrenController implements Controller {
   private removeChild = async(request: Request, response: Response, next: NextFunction) => {
     const id = request.params.id;
     const result = await remove(id);
-    
   }
 
 }
